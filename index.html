@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="he" dir="rtl">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <title>מחשבון תמחור | טליושקה</title>
@@ -75,66 +76,70 @@
 </head>
 <body>
   <header>מחשבון תמחור | טליושקה</header>
-  <div class="container"><div class="card">
-  <h2>🧴 מחשבון תמחור מוצרי קוסמטיקה</h2>
-  <div class="two-col">
-    <div class="col">
-      <h3>טבלת חומרים</h3>
-      <table id="materialsTable">
-        <thead>
-          <tr><th>מק"ט</th><th>שם חומר</th><th>עלות יחידה</th><th>עלות מארז</th><th>ספק</th><th>הערות</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input value="001"></td>
-            <td><input value="שמן שקדים"></td>
-            <td><input type="number" value="2.5"></td>
-            <td><input type="number" value="50"></td>
-            <td><input value="חומרי טבע"></td>
-            <td><input></td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="btn" onclick="addMaterialRow()">➕ הוספת חומר</button>
+  <div class="container">
+
+    <div class="card">
+      <h2>🧴 מחשבון תמחור מוצרי קוסמטיקה</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>טבלת חומרים</h3>
+          <table id="materialsTable">
+            <thead>
+              <tr><th>מק"ט</th><th>שם חומר</th><th>עלות יחידה</th><th>עלות מארז</th><th>ספק</th><th>הערות</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input value="001"></td>
+                <td><input value="שמן שקדים"></td>
+                <td><input type="number" value="2.5"></td>
+                <td><input type="number" value="50"></td>
+                <td><input value="חומרי טבע"></td>
+                <td><input></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn" onclick="addMaterialRow()">➕ הוספת חומר</button>
+        </div>
+
+        <div class="col">
+          <h3>מחשבון מוצר</h3>
+          <table id="productCalcTable">
+            <thead>
+              <tr><th>בחרי חומר</th><th>כמות במוצר</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><select></select></td>
+                <td><input type="number" step="0.01"></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn" onclick="addCalcRow()">➕ הוספת רכיב</button>
+
+          <label>מחיר מכירה ללקוח: <input type="number" id="salePrice" value="30"></label>
+          <div id="resultArea"></div>
+          <button class="btn" onclick="calculateCost()">💰 חשב רווח</button>
+          <button class="btn" onclick="saveProduct()">💾 שמור מוצר</button>
+        </div>
+      </div>
     </div>
 
-    <div class="col">
-      <h3>מחשבון מוצר</h3>
-      <table id="productCalcTable">
-        <thead>
-          <tr><th>בחרי חומר</th><th>כמות במוצר</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><select></select></td>
-            <td><input type="number" step="0.01"></td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="btn" onclick="addCalcRow()">➕ הוספת רכיב</button>
-
-      <label>מחיר מכירה ללקוח: <input type="number" id="salePrice" value="30"></label>
-      <div id="resultArea"></div>
-      <button class="btn" onclick="calculateCost()">💰 חשב רווח</button>
-      <button class="btn" onclick="saveProduct()">💾 שמור מוצר</button>
+    <div class="card">
+      <h2>🎓 מחשבון תמחור סדנאות</h2>
+      <label>סוג סדנא: 
+        <select id="workshopType">
+          <option value="100">סדנת סבונים (100₪ למשתתף)</option>
+          <option value="120">סדנת קרמים (120₪ למשתתף)</option>
+        </select>
+      </label>
+      <label>כמות משתתפים: <input type="number" id="participants" value="10"></label>
+      <div id="workshopResult"></div>
+      <button class="btn" onclick="calculateWorkshop()">📊 חשב סדנא</button>
     </div>
+
   </div>
-</div>
 
-<div class="card">
-  <h2>🎓 מחשבון תמחור סדנאות</h2>
-  <label>סוג סדנא: 
-    <select id="workshopType">
-      <option value="100">סדנת סבונים (100₪ למשתתף)</option>
-      <option value="120">סדנת קרמים (120₪ למשתתף)</option>
-    </select>
-  </label>
-  <label>כמות משתתפים: <input type="number" id="participants" value="10"></label>
-  <div id="workshopResult"></div>
-  <button class="btn" onclick="calculateWorkshop()">📊 חשב סדנא</button>
-</div>
-
-  </div><script>
+<script>
 function addMaterialRow() {
   const row = document.createElement('tr');
   row.innerHTML = '<td><input></td><td><input></td><td><input type="number"></td><td><input type="number"></td><td><input></td><td><input></td>';
@@ -189,5 +194,6 @@ function calculateWorkshop() {
 }
 
 updateMaterialSelects();
-</script></body>
+</script>
+</body>
 </html>
