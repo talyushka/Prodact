@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>מחשבון תמחור מוצרים</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdf6f0;
+      padding: 20px;
+      direction: rtl;
+    }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    input { width: 100%; padding: 6px; }
+    .results { background: #fffbe6; padding: 10px; border: 1px solid #ddd; margin-bottom: 20px; }
+    .products-list { margin-top: 20px; }
+    .btn { padding: 10px 20px; background: #b45f06; color: white; border: none; cursor: pointer; margin-right: 5px; }
+    .btn:hover { background: #914d03; }
+  </style>
+</head>
+<body>
+  <h1>מחשבון תמחור מוצרים</h1>
+
+  <table id="materialsTable">
+    <thead>
+      <tr><th>חומר</th><th>עלות ליחידה (₪)</th><th>כמות במוצר</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input value="שמן קוקוס" /></td>
+        <td><input type="number" step="0.01" value="2.50" /></td>
+        <td><input type="number" step="0.01" value="1" /></td>
+      </tr>
+      <tr>
+        <td><input value="חמאת שיאה" /></td>
+        <td><input type="number" step="0.01" value="3.20" /></td>
+        <td><input type="number" step="0.01" value="1" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <button onclick="addMaterialRow()" class="btn">➕ הוספת שורת חומר</button>
+
+  <br><br>
+  <label>מחיר מכירה (₪): <input type="number" id="salePrice" value="30"></label>
+
+  <div class="results" id="results">
+    <p>💰 עלות חומרים: <span id="totalCost">0</span> ₪</p>
+    <p>📈 רווח גולמי: <span id="grossProfit">0</span> ₪</p>
+    <p>📊 אחוז רווח: <span id="profitMargin">0</span>%</p>
+  </div>
+
+  <button onclick="calculate()" class="btn">🧮 חישוב</button>
+  <button onclick="saveProduct()" class="btn">💾 שמור מוצר לטבלה</button>
+
+  <div class="products-list">
+    <h2>📝 רשימת מוצרים שחושבו:</h2>
+    <ul id="productList"></ul>
+  </div>
+
+  <script>
+    function addMaterialRow() {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input /></td>
+        <td><input type="number" step="0.01" /></td>
+        <td><input type="number" step="0.01" /></td>`;
+      document.querySelector("#materialsTable tbody").appendChild(row);
+    }
+
+    function calculate() {
+      let totalCost = 0;
+      document.querySelectorAll("#materialsTable tbody tr").forEach(row => {
+        const cost = parseFloat(row.children[1].querySelector('input').value) || 0;
+        const qty = parseFloat(row.children[2].querySelector('input').value) || 0;
+        totalCost += cost * qty;
+      });
+      const sale = parseFloat(document.getElementById('salePrice').value) || 0;
+      const profit = sale - totalCost;
+      const margin = sale ? ((profit / sale) * 100).toFixed(1) : 0;
+
+      document.getElementById('totalCost').innerText = totalCost.toFixed(2);
+      document.getElementById('grossProfit').innerText = profit.toFixed(2);
+      document.getElementById('profitMargin').innerText = margin;
+    }
+
+    function saveProduct() {
+      const name = prompt("הכניסי שם למוצר:");
+      if (!name) return;
+
+      const sale = parseFloat(document.getElementById('salePrice').value) || 0;
+      const cost = parseFloat(document.getElementById('totalCost').innerText) || 0;
+      const margin = document.getElementById('profitMargin').innerText;
+
+      const li = document.createElement('li');
+      li.innerText = `${name}: עלות ${cost} ₪ | מחיר ${sale} ₪ | רווח ${margin}%`;
+      document.getElementById('productList').appendChild(li);
+    }
+  </script>
+</body>
+</html>
